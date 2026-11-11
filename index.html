@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f8fafc" />
+    <meta
+      name="description"
+      content="Intercala dos archivos PDF en orden normal o inverso, directamente en tu navegador, sin subir documentos a ningún servidor."
+    />
+    <title>IntercalaPDF · Ordena tus escaneos en segundos</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"
+      defer
+    ></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <div class="brand" aria-label="IntercalaPDF">
+          <span class="brand-symbol" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none">
+              <rect
+                x="8"
+                y="7"
+                width="21"
+                height="26"
+                rx="4"
+                fill="#fff"
+                opacity=".7"
+              />
+              <rect x="13" y="4" width="21" height="26" rx="4" fill="#fff" />
+              <path
+                d="M19 13h9M19 18h9M19 23h5"
+                stroke="#087f8c"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </span>
+          <span>Intercala<span class="brand-accent">PDF</span></span>
+        </div>
+        <span class="privacy-chip"
+          ><span class="privacy-dot"></span> Tus archivos no salen de tu
+          dispositivo</span
+        >
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="main-title">
+          <div class="eyebrow">
+            <span class="eyebrow-spark">✦</span> TU HERRAMIENTA PARA ESCANEOS A
+            DOBLE CARA
+          </div>
+          <h1 id="main-title">
+            Dos archivos.<br /><span>Un PDF en el orden correcto.</span>
+          </h1>
+          <p>
+            Une las páginas de dos escaneos, alternándolas una a una. Elige si
+            el segundo documento debe leerse de principio a fin o al revés.
+          </p>
+        </section>
+
+        <div class="workspace">
+          <section
+            class="panel form-panel"
+            aria-label="Configurar la combinación de PDF"
+          >
+            <div class="panel-heading">
+              <div class="section-number">01</div>
+              <div>
+                <h2>Selecciona tus archivos</h2>
+                <p>Arrastra cada PDF a su zona o haz clic para buscarlo.</p>
+              </div>
+            </div>
+
+            <div class="upload-stack">
+              <div class="upload-group">
+                <div class="input-heading">
+                  <span class="file-badge a">A</span
+                  ><label for="file-a">Primer PDF</label
+                  ><span class="input-side">Orden original</span>
+                </div>
+                <div class="drop-zone" id="drop-a" data-slot="a">
+                  <input
+                    id="file-a"
+                    type="file"
+                    accept=".pdf,application/pdf"
+                    aria-describedby="hint-a"
+                  />
+                  <div class="drop-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M12 16V4m0 0L8 8m4-4 4 4M5 15v3a2 2 0 002 2h10a2 2 0 002-2v-3"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                  <div class="drop-copy">
+                    <strong>Haz clic o arrastra tu primer PDF</strong
+                    ><span id="hint-a"
+                      >Las páginas se conservarán en su orden actual</span
+                    >
+                  </div>
+                  <span class="browse-text">Elegir archivo</span>
+                </div>
+                <div class="selected-file hidden" id="selected-a">
+                  <span class="selected-file-icon" aria-hidden="true">PDF</span>
+                  <div class="selected-details">
+                    <strong id="name-a"></strong><span id="meta-a"></span>
+                  </div>
+                  <button
+                    class="remove-file"
+                    type="button"
+                    data-clear="a"
+                    aria-label="Eliminar primer archivo"
+                    title="Eliminar archivo"
+                  >
+                    ×
+                  </button>
+                </div>
+              </div>
+
+              <div class="middle-connector" aria-hidden="true">
+                <span></span>
+                <div>+</div>
+                <span></span>
+              </div>
+
+              <div class="upload-group">
+                <div class="input-heading">
+                  <span class="file-badge b">B</span
+                  ><label for="file-b">Segundo PDF</label
+                  ><span class="input-side">Orden configurable</span>
+                </div>
+                <div class="drop-zone" id="drop-b" data-slot="b">
+                  <input
+                    id="file-b"
+                    type="file"
+                    accept=".pdf,application/pdf"
+                    aria-describedby="hint-b"
+                  />
+                  <div class="drop-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M12 16V4m0 0L8 8m4-4 4 4M5 15v3a2 2 0 002 2h10a2 2 0 002-2v-3"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                  <div class="drop-copy">
+                    <strong>Haz clic o arrastra tu segundo PDF</strong
+                    ><span id="hint-b"
+                      >Sus páginas se colocarán entre las del primero</span
+                    >
+                  </div>
+                  <span class="browse-text">Elegir archivo</span>
+                </div>
+                <div class="selected-file hidden" id="selected-b">
+                  <span class="selected-file-icon" aria-hidden="true">PDF</span>
+                  <div class="selected-details">
+                    <strong id="name-b"></strong><span id="meta-b"></span>
+                  </div>
+                  <button
+                    class="remove-file"
+                    type="button"
+                    data-clear="b"
+                    aria-label="Eliminar segundo archivo"
+                    title="Eliminar archivo"
+                  >
+                    ×
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-separator"></div>
+            <div class="panel-heading option-heading">
+              <div class="section-number">02</div>
+              <div>
+                <h2>Orden del segundo archivo</h2>
+                <p>El primer PDF siempre mantiene su orden original.</p>
+              </div>
+            </div>
+
+            <fieldset class="order-options">
+              <legend class="sr-only">Elige cómo ordenar el segundo PDF</legend>
+              <label class="order-choice">
+                <input type="radio" name="order" value="normal" />
+                <span class="choice-box">
+                  <span class="choice-top"
+                    ><span class="choice-radio" aria-hidden="true"></span
+                    ><strong>Orden normal</strong></span
+                  >
+                  <span class="choice-caption">1, 2, 3, 4…</span>
+                </span>
+              </label>
+              <label class="order-choice">
+                <input type="radio" name="order" value="reverse" checked />
+                <span class="choice-box">
+                  <span class="choice-top"
+                    ><span class="choice-radio" aria-hidden="true"></span
+                    ><strong>Orden inverso</strong
+                    ><span class="recommended">Escaneo doble cara</span></span
+                  >
+                  <span class="choice-caption"
+                    >Última, penúltima, anterior…</span
+                  >
+                </span>
+              </label>
+            </fieldset>
+
+            <div
+              class="status-message hidden"
+              id="status"
+              role="status"
+              aria-live="polite"
+            ></div>
+            <button
+              type="button"
+              class="generate-button"
+              id="generate"
+              disabled
+            >
+              <span class="button-icon" aria-hidden="true"
+                ><svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M8 4H5a2 2 0 00-2 2v12a2 2 0 002 2h8M9 8h6m-6 4h4m5-7v14m-5-5 5 5 5-5"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  /></svg
+              ></span>
+              <span id="generate-text">Intercalar y generar PDF</span>
+              <span class="button-arrow" aria-hidden="true">→</span>
+            </button>
+            <p class="button-hint">
+              Sin registros · Sin límites de páginas impuestos por la web · Sin
+              subida a la nube
+            </p>
+            <div class="result-box hidden" id="result">
+              <div class="result-heading">
+                <span class="result-check">✓</span
+                ><span
+                  ><strong>¡PDF generado correctamente!</strong
+                  ><small id="result-meta"></small
+                ></span>
+              </div>
+              <a
+                id="download"
+                class="download-button"
+                href="#"
+                download="documento_intercalado.pdf"
+                >↓ &nbsp; Descargar PDF intercalado</a
+              >
+            </div>
+          </section>
+
+          <aside class="sidebar">
+            <section
+              class="panel preview-panel"
+              aria-labelledby="preview-title"
+            >
+              <div class="preview-title-row">
+                <span class="mini-icon" aria-hidden="true"
+                  ><svg viewBox="0 0 24 24" fill="none">
+                    <rect
+                      x="4"
+                      y="5"
+                      width="10"
+                      height="14"
+                      rx="2"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                    <path
+                      d="M9 9h2M9 13h2M18 8h2v10a2 2 0 01-2 2h-7"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                    /></svg
+                ></span>
+                <h2 id="preview-title">Vista previa del orden</h2>
+              </div>
+              <p class="preview-subtitle" id="preview-caption">
+                Ejemplo de cómo quedarán las páginas al intercalar.
+              </p>
+              <div
+                class="page-stream"
+                id="page-stream"
+                aria-label="Secuencia de páginas resultante"
+              ></div>
+              <div class="page-legend">
+                <span><i class="legend-marker a"></i> Primer PDF</span
+                ><span><i class="legend-marker b"></i> Segundo PDF</span>
+              </div>
+              <div class="preview-footer">
+                <span>Total de páginas</span><strong id="total-pages">—</strong>
+              </div>
+            </section>
+
+            <section class="tip-card">
+              <div class="tip-icon" aria-hidden="true">✳</div>
+              <h3>¿Has escaneado a doble cara en dos tandas?</h3>
+              <p>
+                Si has escaneado primero todas las caras delanteras y después
+                las traseras empezando por el final, selecciona
+                <strong>Orden inverso</strong> para reconstruir el documento.
+              </p>
+              <div class="tip-example">
+                <span>A1</span><i>→</i><span>B4</span><i>→</i><span>A2</span
+                ><i>→</i><span>B3</span><i>→</i><span>…</span>
+              </div>
+            </section>
+
+            <section class="local-card">
+              <div class="local-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <rect
+                    x="5"
+                    y="10"
+                    width="14"
+                    height="11"
+                    rx="2"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                  />
+                  <path
+                    d="M8 10V7a4 4 0 018 0v3m-4 4v3"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h3>Privado por diseño</h3>
+                <p>
+                  El procesamiento se hace en tu navegador. Los PDF no se
+                  transmiten a ningún servidor.
+                </p>
+              </div>
+            </section>
+          </aside>
+        </div>
+      </main>
+
+      <footer class="site-footer">
+        <span>IntercalaPDF · Herramienta gratuita</span
+        ><span>Procesamiento local de documentos</span
+        ><span>Desarrollado por ManRio.dev</span>
+      </footer>
+    </div>
+  </body>
+</html>
